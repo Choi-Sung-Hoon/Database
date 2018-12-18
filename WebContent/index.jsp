@@ -1,3 +1,7 @@
+<%@page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@page import="java.util.List"%>
+<%@page import="model.model_Article"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,11 +46,40 @@
               <a class="nav-link" href="about.jsp">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="post.jsp">Portfolios</a>
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_Portfolio">Portfolios</a>
             </li>
+            <%
+            	boolean flag = false;
+    		
+	    		if(session != null && !session.isNew())
+	    		{
+	    			try
+	    			{
+	    				flag = (boolean)session.getAttribute("flag");
+	    			}
+	    			catch(Exception e)
+	    			{
+	    				session = null;
+	    			}
+	    		}
+	    		
+	    		if(flag)
+	    		{
+            %>
+            <li class="nav-item">
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_Logout">Logout</a>
+            </li>
+            <%
+	    		}
+	            else
+	            {
+            %>
             <li class="nav-item">
               <a class="nav-link" href="login.jsp">Login</a>
             </li>
+            <%
+            	}
+            %>
           </ul>
         </div>
       </div>
@@ -71,62 +104,28 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+        <%
+			@SuppressWarnings("unchecked")
+			List<model_Article> list = (List<model_Article>)request.getAttribute("list");
+			
+			for(model_Article a : list)
+			{
+		%>
           <div class="post-preview">
-            <a href="post.jsp">
+            <a href="portfolio.jsp">
               <h2 class="post-title">
-                First title of the first article
+                <%=a.getTitle() %>
               </h2>
-              <h3 class="post-subtitle">
-                First subtitle of the first article
-              </h3>
             </a>
             <p class="post-meta">Posted by
-              <a href="#">KNU Folio</a>
-              on September 24, 2018</p>
+              <a href="#"><%=a.getAuthor() %></a>
+                <%=a.getWriteDate() %>
+            </p>
           </div>
           <hr>
-          <div class="post-preview">
-            <a href="post.jsp">
-              <h2 class="post-title">
-                Second title of the second article
-              </h2>
-              <h3 class="post-subtitle">
-                Second subtitle of the first article
-              </h3>
-            </a>
-            <p class="post-meta">Posted by
-              <a href="#">KNU Folio</a>
-              on September 18, 2018</p>
-          </div>
-          <hr>
-          <div class="post-preview">
-            <a href="post.jsp">
-              <h2 class="post-title">
-                Third title of the third article
-              </h2>
-              <h3 class="post-subtitle">
-                Third subtitle of the third article
-              </h3>
-            </a>
-            <p class="post-meta">Posted by
-              <a href="#">KNU Folio</a>
-              on August 24, 2018</p>
-          </div>
-          <hr>
-          <div class="post-preview">
-            <a href="post.jsp">
-              <h2 class="post-title">
-                Fourth title of the fourth article
-              </h2>
-              <h3 class="post-subtitle">
-                Fourth subtitle of the fourth article
-              </h3>
-            </a>
-            <p class="post-meta">Posted by
-              <a href="#">KNU Folio</a>
-              on July 8, 2018</p>
-          </div>
-          <hr>
+		<%
+			}
+		%>
           <!-- Pager -->
           <div class="clearfix">
             <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>

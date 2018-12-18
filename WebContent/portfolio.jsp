@@ -1,3 +1,7 @@
+<%@page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@page import="java.util.List"%>
+<%@page import="model.model_Article"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,11 +46,40 @@
               <a class="nav-link" href="about.jsp">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="post.jsp">Portfolios</a>
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_Portfolio">Portfolios</a>
             </li>
+            <%
+            	boolean flag = false;
+    		
+	    		if(!session.isNew())
+	    		{
+	    			try
+	    			{
+	    				flag = (boolean)session.getAttribute("flag");
+	    			}
+	    			catch(Exception e)
+	    			{
+	    				session = null;
+	    			}
+	    		}
+	    		
+	    		if(flag)
+	    		{
+            %>
+            <li class="nav-item">
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_Logout">Logout</a>
+            </li>
+            <%
+	    		}
+	            else
+	            {
+            %>
             <li class="nav-item">
               <a class="nav-link" href="login.jsp">Login</a>
             </li>
+            <%
+            	}
+            %>
           </ul>
         </div>
       </div>
@@ -80,30 +113,24 @@
 					</tr>
 				</thead>
 				<tbody>
+				<%
+					@SuppressWarnings("unchecked")
+					List<model_Article> list = (List<model_Article>)request.getAttribute("list");
+					
+					for(model_Article a : list)
+					{
+				%>
 					<tr>
-						<th scope="row" class="text-center" style="width: 10%">1</th>
+						<th scope="row" class="text-center" style="width: 10%"><%=a.getArticleNumber() %></th>
 						<td class="text-center" style="width: 70%">
-							<a href="#article1"> I can't type korean fucking Eclipse </a>
+							<a href="#article1"><%=a.getTitle() %></a>
 						</td>
-						<td class="text-center" style="width: 5%">Admin</td>
-						<td class="text-center" style="width: 15%">2018-12-16</td>
+						<td class="text-center" style="width: 5%"><%=a.getAuthor() %></td>
+						<td class="text-center" style="width: 15%"><%=a.getWriteDate() %></td>
 					</tr>
-					<tr>
-						<th scope="row" class="text-center" style="width: 10%">2</th>
-						<td class="text-center" style="width: 70%">
-							<a href="#article2"> I hate web programming </a>
-						</td>
-						<td class="text-center" style="width: 5%">Admin</td>
-						<td class="text-center" style="width: 15%">2018-12-16</td>
-					</tr>
-					<tr>
-						<th scope="row" class="text-center" style="width: 10%">3</th>
-						<td class="text-center" style="width: 70%">
-							<a href="#article3"> Tomorrow is damn Thursday </a>
-						</td>
-						<td class="text-center" style="width: 5%">Admin</td>
-						<td class="text-center" style="width: 15%">2018-12-16</td>
-					</tr>
+				<%
+					}
+				%>
 				</tbody>
 			</table>
 		</div>

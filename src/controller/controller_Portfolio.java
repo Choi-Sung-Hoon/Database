@@ -1,9 +1,7 @@
 package controller;
 
-import dao.dao_Members;
-import model.model_Members;
-
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,12 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/controller_Login")
-public class controller_Login extends HttpServlet
+import dao.dao_Article;
+import model.model_Article;
+
+@WebServlet("/controller_Portfolio")
+public class controller_Portfolio extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	public controller_Login()
+	public controller_Portfolio()
 	{
 		super();
 	}
@@ -29,29 +30,21 @@ public class controller_Login extends HttpServlet
 		response.setContentType("text/html; charset=EUC-KR");
 		response.setCharacterEncoding("euc-kr");
 
-		dao_Members service = dao_Members.getInstance();
+		dao_Article service = dao_Article.getInstance();
 
 		// create session
-		boolean flag = false;
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		// read login data
-		String id = request.getParameter("loginId");
-		String password = request.getParameter("loginPassword");
+		String id = (String)session.getAttribute("id");
+	
+		List<model_Article> list = service.select();
 		
-		// search member with id
-		model_Members m = service.select(id);
-		
-		// same id & same password = success 
-		if (m != null && password.equals(m.getPassword()))
-		{
-			session.setAttribute("id", id);
-			flag = true;
-		}
-		session.setAttribute("flag", flag);
+		request.setAttribute("id", id);
+		request.setAttribute("list", list);
 		
 		// index.jsp로 이동
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/portfolio.jsp");
 		if (dispatcher != null)
 			dispatcher.forward(request, response);
 	}

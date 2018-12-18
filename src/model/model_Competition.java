@@ -3,27 +3,27 @@ import java.sql.Date;
 
 public class model_Competition
 {
-	private int student_number;
+	private String id;;
 	private String competition_name;
 	private String prize;
 	private Date competition_date;
 	
-	public model_Competition(int student_number, String competition_name, String prize, Date competition_date)
+	public model_Competition(String id, String competition_name, String prize, Date competition_date)
 	{
-		this.setStudentNumber(student_number);
+		this.setId(id);
 		this.setCompetitionName(competition_name);
 		this.setPrize(prize);
 		this.setCompetitionDate(competition_date);
 	}
 	
-	public int getStudentNumber()
+	public String getId()
 	{
-		return student_number;
+		return id;
 	}
 	
-	public void setStudentNumber(int student_number)
+	public void setId(String id)
 	{
-		this.student_number = student_number;
+		this.id = id;
 	}
 	
 	public String getCompetitionName()
@@ -59,6 +59,6 @@ public class model_Competition
 	@Override
 	public String toString()
 	{
-		return "Competition[student_number=" + student_number + ", competition_name=" + competition_name + ", prize=" + prize + "]";
+		return "Competition[id=" + id + ", competition_name=" + competition_name + ", prize=" + prize + "]";
 	}
 }

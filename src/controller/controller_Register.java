@@ -30,11 +30,11 @@ public class controller_Register extends HttpServlet
 		response.setCharacterEncoding("euc-kr");
 		
 		// create service object
-		dao_Members service = new dao_Members();
+		dao_Members service = dao_Members.getInstance();
 		
 		// read parameters
-		String id = request.getParameter("id");
-		String password = request.getParameter("password");
+		String id = request.getParameter("registerId");
+		String password = request.getParameter("registerPassword");
 		String student_number = request.getParameter("studentNumber");
 		String student_name = request.getParameter("studentName");
 		String degree = request.getParameter("degree");

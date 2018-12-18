@@ -1,8 +1,5 @@
 package controller;
 
-import dao.dao_Members;
-import model.model_Members;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -11,14 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet("/controller_Login")
-public class controller_Login extends HttpServlet
+@WebServlet("/controller_Logout")
+public class controller_Logout extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	public controller_Login()
+	public controller_Logout()
 	{
 		super();
 	}
@@ -29,26 +25,7 @@ public class controller_Login extends HttpServlet
 		response.setContentType("text/html; charset=EUC-KR");
 		response.setCharacterEncoding("euc-kr");
 
-		dao_Members service = dao_Members.getInstance();
-
-		// create session
-		boolean flag = false;
-		HttpSession session = request.getSession();
-
-		// read login data
-		String id = request.getParameter("loginId");
-		String password = request.getParameter("loginPassword");
-		
-		// search member with id
-		model_Members m = service.select(id);
-		
-		// same id & same password = success 
-		if (m != null && password.equals(m.getPassword()))
-		{
-			session.setAttribute("id", id);
-			flag = true;
-		}
-		session.setAttribute("flag", flag);
+		request.getSession(false).invalidate();
 		
 		// index.jsp로 이동
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");

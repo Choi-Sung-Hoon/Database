@@ -4,31 +4,33 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import conn.DBConnect;
-import model.model_Members;
+import model.model_Article;
 
-public class dao_Members
+public class dao_Article
 {
-	public static dao_Members instance = null;
+	public static dao_Article instance = null;
 	private DBConnect db;
 	
-	public dao_Members()
+	public dao_Article()
 	{
 		db = DBConnect.getInstance();
 	}
 	
-	public static dao_Members getInstance()
+	public static dao_Article getInstance()
 	{
 		if(instance == null)
-			instance = new dao_Members();
+			instance = new dao_Article();
 		return instance;
 	}
 	
-	public void insert(model_Members m)
+	public void insert(model_Article a)
 	{
 		Connection conn = null;
-		String sql = "insert into members values(?, ?, ?, ?, ?, ?)";
+		String sql = "insert into article values(?, ?, ?, ?, ?)";
 		PreparedStatement pstmt = null;
 		
 		try
@@ -36,12 +38,11 @@ public class dao_Members
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(sql);
 		
-			pstmt.setString(1, m.getId());
-			pstmt.setString(2, m.getPassword());
-			pstmt.setInt(3, m.getStudentNumber());
-			pstmt.setString(4, m.getStudentName());
-			pstmt.setInt(5, m.getDegree());
-			pstmt.setString(6, m.getMajorName());
+			pstmt.setString(1, a.getId());
+			pstmt.setInt(2, a.getArticleNumber());
+			pstmt.setString(3, a.getTitle());
+			pstmt.setString(4, a.getAuthor());
+			pstmt.setDate(5, a.getWriteDate());
 			
 			pstmt.executeUpdate();
 		}
@@ -63,23 +64,25 @@ public class dao_Members
 		}
 	}
 	
-	public model_Members select(String id)
+	public List<model_Article> select()
 	{
 		Connection conn = null;
 		ResultSet rs = null;
-		String sql = "select * from members where id = ?";
+		String sql = "select * from article";
 		PreparedStatement pstmt = null;
+		List<model_Article> list = new ArrayList<model_Article>();
 		
 		try
 		{
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			
-			if(rs.next())
-				return new model_Members(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getString(6));
+			while(rs.next())
+			{
+				model_Article a = new model_Article(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDate(5));
+				list.add(a);
+			}
 		}
 		catch(SQLException e)
 		{
@@ -92,6 +95,7 @@ public class dao_Members
 				rs.close();
 				pstmt.close();
 				conn.close();
+				return list;
 			}
 			catch(SQLException e)
 			{
@@ -101,10 +105,10 @@ public class dao_Members
 		return null;
 	}
 	
-	public void update(model_Members m)
+	public void update(model_Article a)
 	{
 		Connection conn = null;
-		String sql = "update members set password=?, student_number=?, student_name=?, degree=?, major_name=? where id=?";
+		String sql = "update article set article_number = ?, title = ?, author = ?, write_date = ? where id = ? and article_number = ?";
 		PreparedStatement pstmt = null;
 		
 		try
@@ -112,12 +116,12 @@ public class dao_Members
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, m.getPassword());
-			pstmt.setInt(2, m.getStudentNumber());
-			pstmt.setString(3, m.getStudentName());
-			pstmt.setInt(4, m.getDegree());
-			pstmt.setString(5, m.getMajorName());
-			pstmt.setString(6, m.getId());
+			pstmt.setInt(1, a.getArticleNumber());
+			pstmt.setString(2, a.getTitle());
+			pstmt.setString(3, a.getAuthor());
+			pstmt.setDate(4, a.getWriteDate());
+			pstmt.setString(6, a.getId());
+			pstmt.setInt(6, a.getArticleNumber());
 			
 			pstmt.executeUpdate();
 		}

@@ -44,11 +44,40 @@
               <a class="nav-link" href="about.jsp">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="post.jsp">Portfolios</a>
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_Portfolio">Portfolios</a>
             </li>
+            <%
+            	boolean flag = false;
+    		
+	    		if(!session.isNew())
+	    		{
+	    			try
+	    			{
+	    				flag = (boolean)session.getAttribute("flag");
+	    			}
+	    			catch(Exception e)
+	    			{
+	    				session = null;
+	    			}
+	    		}
+	    		
+	    		if(flag)
+	    		{
+            %>
+            <li class="nav-item">
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_Logout">Logout</a>
+            </li>
+            <%
+	    		}
+	            else
+	            {
+            %>
             <li class="nav-item">
               <a class="nav-link" href="login.jsp">Login</a>
             </li>
+            <%
+            	}
+            %>
           </ul>
         </div>
       </div>
@@ -74,18 +103,18 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>Want to manage your portfolio?	If you don't have any account, please register!</p>
-          <form name="login" id="loginForm" novalidate>
+          <form name="loginForm" id="loginForm" action="<%=request.getContextPath()%>/controller_Login" method="post" novalidate>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>ID</label>
-                <input type="text" class="form-control" placeholder="ID" id="userid" required data-validation-required-message="Please enter your ID">
+                <input type="text" class="form-control" placeholder="ID" id="loginId" name="loginId" required data-validation-required-message="Please enter your ID">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Password</label>
-                <input type="password" class="form-control" placeholder="Password" id="password" required data-validation-required-message="Please enter your Password.">
+                <input type="password" class="form-control" placeholder="Password" id="loginPassword" name="loginPassword" required data-validation-required-message="Please enter your Password.">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
@@ -93,7 +122,7 @@
             <div id="success"></div>
             <div class="form-group">
               <button type="submit" class="btn btn-primary" id="sendLoginButton">Login</button>
-              <button type="submit" class="btn btn-primary" id="openRegisterModal" data-target="#registerPopup" data-toggle="modal">Register</button>
+              <button type="button" class="btn btn-primary" id="openRegisterModal" data-target="#registerPopup" data-toggle="modal">Register</button>
             </div>
           </form>
         </div>
@@ -110,48 +139,48 @@
 	            <div class = "modal-body">
 	                <article class="container-fluid" >
 	                    <div class="col-lg-12 col-md-10 mx-auto">
-	                        <form role="form" class="needs-validation" novalidate action="<%=request.getContextPath()%>/controller_Register" method="post">
+	                        <form role="form" id="registrationForm" class="needs-validation" action="<%=request.getContextPath()%>/controller_Register" method="post" novalidate>
 	                            <div class="form-group">
 	                                <label for="id">User ID</label>
-	                                <input type="text" class="form-control" id="id" name="id" placeholder="Enter your ID" required>
+	                                <input type="text" class="form-control" id="registerId" name="registerId" placeholder="Enter your ID" required>
 	                                <div class="valid-feedback">Looks good!</div>
-	                                <div class="invalid-feedback">Please provide a valid ID</div>
+	                                <div class="invalid-feedback">Please provide a ID</div>
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="password">Password</label>
-	                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+	                                <input type="password" class="form-control" id="registerPassword" name="registerPassword" placeholder="Enter your password" required>
 	                                <div class="valid-feedback">Looks good!</div>
-	                                <div class="invalid-feedback">Please provide a valid password</div>
+	                                <div class="invalid-feedback">Please provide a password</div>
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="passwordCheck">Check password</label>
-	                                <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="Enter your password again" required>
+	                                <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="Enter your password again" data-match="#registerPassword" data-match-error="Whoops, these don't match" required>
 	                                <div class="valid-feedback">Looks good!</div>
-	                                <div class="invalid-feedback">Please provide a valid password</div>
+	                                <div class="invalid-feedback">Please provide a password</div>
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="studentName">Name</label>
 	                                <input type="text" class="form-control" id="studentName" name="studentName" placeholder="Enter your name" required>
 	                                <div class="valid-feedback">Looks good!</div>
-	                                <div class="invalid-feedback">Please provide a valid name</div>
+	                                <div class="invalid-feedback">Please provide a name</div>
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="studentNumber">Student Number</label>
 	                                <input type="number" class="form-control" id="studentNumber" name="studentNumber" placeholder="Enter your student number" required>
 	                                <div class="valid-feedback">Looks good!</div>
-	                                <div class="invalid-feedback">Please provide a valid student number</div>
+	                                <div class="invalid-feedback">Please provide a student number</div>
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="majorName">Major</label>
 	                                <input type="text" class="form-control" id="majorName" name="majorName" placeholder="Enter your major" required>
 	                                <div class="valid-feedback">Looks good!</div>
-	                                <div class="invalid-feedback">Please provide a valid name</div>
+	                                <div class="invalid-feedback">Please provide a name</div>
 	                            </div>
 	                            <div class="form-group">
 	                                <label for="degree">Degree</label>
 	                                <input type="number" class="form-control" id="degree" name="degree" placeholder="Enter your degree" required>
 	                                <div class="valid-feedback">Looks good!</div>
-	                                <div class="invalid-feedback">Please provide a valid degree</div>
+	                                <div class="invalid-feedback">Please provide a degree</div>
 	                            </div>
 	                            <div class="form-group text-center">
 	                                <button type="submit" id="submit" name="submit" class="btn btn-primary">

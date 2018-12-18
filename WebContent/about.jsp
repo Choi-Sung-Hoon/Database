@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,11 +44,40 @@
               <a class="nav-link" href="about.jsp">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="post.jsp">Portfolios</a>
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_Portfolio">Portfolios</a>
             </li>
+            <%
+            	boolean flag = false;
+    		
+	    		if(!session.isNew())
+	    		{
+	    			try
+	    			{
+	    				flag = (boolean)session.getAttribute("flag");
+	    			}
+	    			catch(Exception e)
+	    			{
+	    				session = null;
+	    			}
+	    		}
+	    		
+	    		if(flag)
+	    		{
+            %>
+            <li class="nav-item">
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_Logout">Logout</a>
+            </li>
+            <%
+	    		}
+	            else
+	            {
+            %>
             <li class="nav-item">
               <a class="nav-link" href="login.jsp">Login</a>
             </li>
+            <%
+            	}
+            %>
           </ul>
         </div>
       </div>
