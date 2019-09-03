@@ -65,6 +65,9 @@
 	    		{
             %>
             <li class="nav-item">
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_MyPage">${id}</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="<%=request.getContextPath()%>/controller_Logout">Logout</a>
             </li>
             <%
@@ -149,12 +152,6 @@
 	                            <div class="form-group">
 	                                <label for="password">Password</label>
 	                                <input type="password" class="form-control" id="registerPassword" name="registerPassword" placeholder="Enter your password" required>
-	                                <div class="valid-feedback">Looks good!</div>
-	                                <div class="invalid-feedback">Please provide a password</div>
-	                            </div>
-	                            <div class="form-group">
-	                                <label for="passwordCheck">Check password</label>
-	                                <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="Enter your password again" data-match="#registerPassword" data-match-error="Whoops, these don't match" required>
 	                                <div class="valid-feedback">Looks good!</div>
 	                                <div class="invalid-feedback">Please provide a password</div>
 	                            </div>

@@ -59,6 +59,6 @@ public class model_Competition
 	@Override
 	public String toString()
 	{
-		return "Competition[id=" + id + ", competition_name=" + competition_name + ", prize=" + prize + "]";
+		return "Competition[id=" + id + ", competition_name=" + competition_name + ", prize=" + prize + ", competition_date=" + competition_date + "]";
 	}
 }

@@ -50,10 +50,19 @@ public class controller_Login extends HttpServlet
 		}
 		session.setAttribute("flag", flag);
 		
-		// index.jsp로 이동
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-		if (dispatcher != null)
-			dispatcher.forward(request, response);
+		// successful login
+		if(flag)
+		{
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+			if (dispatcher != null)
+				dispatcher.forward(request, response);
+		}
+		else
+		{
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+			if (dispatcher != null)
+				dispatcher.forward(request, response);
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

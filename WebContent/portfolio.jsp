@@ -67,6 +67,9 @@
 	    		{
             %>
             <li class="nav-item">
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_MyPage">${id}</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="<%=request.getContextPath()%>/controller_Logout">Logout</a>
             </li>
             <%
@@ -123,7 +126,7 @@
 					<tr>
 						<th scope="row" class="text-center" style="width: 10%"><%=a.getArticleNumber() %></th>
 						<td class="text-center" style="width: 70%">
-							<a href="#article1"><%=a.getTitle() %></a>
+							<a href="<%=request.getContextPath()%>/controller_View?author=<%=a.getAuthor()%>"><%=a.getArticleName() %></a>
 						</td>
 						<td class="text-center" style="width: 5%"><%=a.getAuthor() %></td>
 						<td class="text-center" style="width: 15%"><%=a.getWriteDate() %></td>

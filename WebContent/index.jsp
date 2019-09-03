@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@page import="java.util.List"%>
 <%@page import="model.model_Article"%>
+<%@page import="dao.dao_Article"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,6 +68,9 @@
 	    		{
             %>
             <li class="nav-item">
+              <a class="nav-link" href="<%=request.getContextPath()%>/controller_MyPage">${id}</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="<%=request.getContextPath()%>/controller_Logout">Logout</a>
             </li>
             <%
@@ -99,40 +103,6 @@
         </div>
       </div>
     </header>
-
-    <!-- Main Content -->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-        <%
-			@SuppressWarnings("unchecked")
-			List<model_Article> list = (List<model_Article>)request.getAttribute("list");
-			
-			for(model_Article a : list)
-			{
-		%>
-          <div class="post-preview">
-            <a href="portfolio.jsp">
-              <h2 class="post-title">
-                <%=a.getTitle() %>
-              </h2>
-            </a>
-            <p class="post-meta">Posted by
-              <a href="#"><%=a.getAuthor() %></a>
-                <%=a.getWriteDate() %>
-            </p>
-          </div>
-          <hr>
-		<%
-			}
-		%>
-          <!-- Pager -->
-          <div class="clearfix">
-            <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <hr>
 

@@ -6,29 +6,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import conn.DBConnect;
-import model.model_Article;
+import model.model_Rest;
 
-public class dao_Article
+public class dao_Rest
 {
-	public static dao_Article instance = null;
+	public static dao_Rest instance = null;
 	private DBConnect db;
 	
-	public dao_Article()
+	public dao_Rest()
 	{
 		db = DBConnect.getInstance();
 	}
 	
-	public static dao_Article getInstance()
+	public static dao_Rest getInstance()
 	{
 		if(instance == null)
-			instance = new dao_Article();
+			instance = new dao_Rest();
 		return instance;
 	}
 	
-	public void insert(model_Article a)
+	public void insert(model_Rest r)
 	{
 		Connection conn = null;
-		String sql = "insert into article values(?, ?, ?, ?, ?)";
+		String sql = "insert into rest values(?, ?, ?)";
 		PreparedStatement pstmt = null;
 		
 		try
@@ -36,11 +36,9 @@ public class dao_Article
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(sql);
 		
-			pstmt.setString(1, a.getId());
-			pstmt.setInt(2, a.getArticleNumber());
-			pstmt.setString(3, a.getArticleName());
-			pstmt.setString(4, a.getAuthor());
-			pstmt.setDate(5, a.getWriteDate());
+			pstmt.setString(1, r.getId());
+			pstmt.setDate(3, r.getStartDate());
+			pstmt.setDate(4, r.getEndDate());
 			
 			pstmt.executeUpdate();
 		}
@@ -62,23 +60,24 @@ public class dao_Article
 		}
 	}
 	
-	public model_Article select(String id)
+	public model_Rest select(String id)
 	{
 		Connection conn = null;
 		ResultSet rs = null;
-		String sql = "select * from article where id = ?";
+		String sql = "select * from rest where id = ?";
 		PreparedStatement pstmt = null;
-		model_Article a = null;
+		model_Rest r = null;
 		
 		try
 		{
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(sql);
+			
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next())
-				a = new model_Article(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDate(5));
+				r = new model_Rest(rs.getString(1), rs.getDate(2), rs.getDate(3));
 		}
 		catch(SQLException e)
 		{
@@ -91,7 +90,7 @@ public class dao_Article
 				rs.close();
 				pstmt.close();
 				conn.close();
-				return a;
+				return r;
 			}
 			catch(SQLException e)
 			{
@@ -101,10 +100,10 @@ public class dao_Article
 		return null;
 	}
 	
-	public void update(model_Article a)
+	public void update(model_Rest r)
 	{
 		Connection conn = null;
-		String sql = "update article set article_number = ?, article_name = ?, author = ?, write_date = ? where id = ? and article_number = ?";
+		String sql = "update rest set start_date=?, end_date=? where id=?";
 		PreparedStatement pstmt = null;
 		
 		try
@@ -112,12 +111,9 @@ public class dao_Article
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, a.getArticleNumber());
-			pstmt.setString(2, a.getArticleName());
-			pstmt.setString(3, a.getAuthor());
-			pstmt.setDate(4, a.getWriteDate());
-			pstmt.setString(5, a.getId());
-			pstmt.setInt(6, a.getArticleNumber());
+			pstmt.setDate(1, r.getStartDate());
+			pstmt.setDate(2, r.getEndDate());
+			pstmt.setString(3, r.getId());
 			
 			pstmt.executeUpdate();
 		}
@@ -142,7 +138,7 @@ public class dao_Article
 	public void delete(String id)
 	{
 		Connection conn = null;
-		String sql = "delete from article where id = ?";
+		String sql = "delete from rest where id = ?";
 		PreparedStatement pstmt = null;
 		
 		try
@@ -169,43 +165,5 @@ public class dao_Article
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public int getRowCount()
-	{
-		Connection conn = null;
-		ResultSet rs = null;
-		String sql = "select count(*) from article";
-		PreparedStatement pstmt = null;
-		int count = 0;
-		
-		try
-		{
-			conn = db.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next())
-				count = rs.getInt(1);
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				rs.close();
-				pstmt.close();
-				conn.close();
-				return count;
-			}
-			catch(SQLException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		return count;
 	}
 }

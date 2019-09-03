@@ -13,7 +13,7 @@ public class model_Article
 	{
 		this.setId(id);
 		this.setArticleNumber(article_number);
-		this.setTitle(title);
+		this.setArticleName(title);
 		this.setAuthor(author);
 		this.setWriteDate(write_date);
 	}
@@ -38,12 +38,12 @@ public class model_Article
 		this.article_number = article_number;
 	}
 
-	public String getTitle()
+	public String getArticleName()
 	{
 		return title;
 	}
 
-	public void setTitle(String title)
+	public void setArticleName(String title)
 	{
 		this.title = title;
 	}
@@ -71,7 +71,7 @@ public class model_Article
 	@Override
 	public String toString()
 	{
-		return "Members[id=" + getId() + ", article_number=" + getArticleNumber() + ", title=" + getTitle() + ", author="
+		return "Members[id=" + getId() + ", article_number=" + getArticleNumber() + ", title=" + getArticleName() + ", author="
 				+ getAuthor() + ", write_date=" + getWriteDate() + "]";
 	}
 }
