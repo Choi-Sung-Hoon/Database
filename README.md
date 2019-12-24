@@ -12,7 +12,7 @@ This is a final project of Database module.
 
 KNU Folio is a simple web service for students to manage their portfolio.  
 
-This project requires **Java, JSP, Servlet, Oracle Database Server**.
+This project requires **Java, JDBC, JSP, Servlet, Oracle Database Server**.
 
 </br>
 
@@ -29,6 +29,8 @@ Prerequisite
 - [Apache Tomcat](http://tomcat.apache.org/) v8.0 or higher (Apache Tomcat should be installed on local host and Eclipse)
 
 - [Oracle Database](https://www.oracle.com/database/technologies/) (Oracle Database 11g is used for this project)
+
+- JDBC (**Eclipse should be connected to Oracle JDBC driver**)
 
 </br>
 
