@@ -12,7 +12,7 @@ README: [한국어](README.ko.md), [English](README.md)
 
 KNU Folio는 학생들이 자신들의 포트폴리오를 관리할 수 있도록 도와주는 웹 서비스입니다.  
 
-이 프로젝트는 **Java, JSP, Servlet, Oracle Database Server**가 필요합니다.
+이 프로젝트는 **Java, JDBC, JSP, Servlet, Oracle Database Server**가 필요합니다.
 
 </br>
 
@@ -29,6 +29,8 @@ ER 다이어그램
 - [Apache Tomcat](http://tomcat.apache.org/) v8.0 or higher (로컬 컴퓨터와 이클립스에 아파치 톰캣이 설치되있어야 합니다.)  
 
 - [Oracle Database](https://www.oracle.com/database/technologies/) (이 프로젝트에서는 Oracle Database 11g가 사용되었습니다.)  
+
+- JDBC (**이클립스는 반드시 오라클 JDBC 드라이버와 연결되있어야 합니다.**)
 
 </br>
 
