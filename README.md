@@ -138,7 +138,7 @@ Installation
 
 </br>
 
-Demo 
+Demo Video
 ----------
 
 [<img src="http://img.youtube.com/vi/PIJWqJt30p8/0.jpg" width="600">](http://www.youtube.com/watch?v=PIJWqJt30p8)
